@@ -2,7 +2,7 @@
 
 set -eu
 
-NATS_K8S_VERSION=${DEFAULT_NATS_K8S_VERSION:=https://raw.githubusercontent.com/vitta-health/nats-io-k8s/93c2a213bd26791fda29da2b7238e3f3b1ca36e1}
+NATS_K8S_VERSION=${DEFAULT_NATS_K8S_VERSION:=https://raw.githubusercontent.com/vitta-health/nats-io-k8s/master}
 NATS_BOOTSTRAP_YML=${DEFAULT_NATS_BOOTSTRAP_YML:=$NATS_K8S_VERSION/setup/bootstrap-policy.yml}
 NATS_SETUP_IMAGE=${DEFAULT_NATS_SETUP_IMAGE:=synadia/nats-setup:0.1.6}
 

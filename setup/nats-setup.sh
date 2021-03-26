@@ -4,7 +4,7 @@ set -eu
 
 VERSION="0.2.2"
 
-NATS_K8S_COMMIT=93c2a213bd26791fda29da2b7238e3f3b1ca36e1
+NATS_K8S_COMMIT=master
 
 NATS_K8S_VERSION=https://raw.githubusercontent.com/vitta-health/nats-io-k8s/$NATS_K8S_COMMIT
 
