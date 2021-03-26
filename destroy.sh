@@ -2,6 +2,8 @@
 
 echo "Cleaning up..."
 
+kubectl config set-context --current --namespace=nats
+
 kubectl delete sts nats
 kubectl delete sts stan
 kubectl delete sts prometheus-nats-prometheus

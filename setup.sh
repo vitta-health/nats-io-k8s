@@ -4,7 +4,9 @@ set -eu
 
 NATS_K8S_VERSION=${DEFAULT_NATS_K8S_VERSION:=https://raw.githubusercontent.com/vitta-health/nats-io-k8s/master}
 NATS_BOOTSTRAP_YML=${DEFAULT_NATS_BOOTSTRAP_YML:=$NATS_K8S_VERSION/setup/bootstrap-policy.yml}
-NATS_SETUP_IMAGE=${DEFAULT_NATS_SETUP_IMAGE:=synadia/nats-setup:0.1.6}
+NATS_SETUP_IMAGE=${DEFAULT_NATS_SETUP_IMAGE:=gilsonsouzah/nats-setup:1.0.0}
+
+kubectl config set-context --current --namespace=nats
 
 # Apply policy required to be able to create the resources.
 kubectl apply -n nats -f "$NATS_BOOTSTRAP_YML"
