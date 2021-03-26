@@ -92,75 +92,75 @@ create_creds() {
 }
 
 create_secrets() {
-        kctl create secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds"
-        kctl create secret generic nats-test-creds  --from-file "$NSC_DIR/nkeys/creds/KO/A/test.creds"
-        kctl create secret generic nats-test2-creds --from-file "$NSC_DIR/nkeys/creds/KO/B/test.creds"
-        kctl create secret generic stan-creds       --from-file "$NSC_DIR/nkeys/creds/KO/STAN/stan.creds"
-        kctl create configmap nats-accounts         --from-file "$NSC_DIR/config/resolver.conf"
+        kctl create -n nats secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds"
+        kctl create -n nats secret generic nats-test-creds  --from-file "$NSC_DIR/nkeys/creds/KO/A/test.creds"
+        kctl create -n nats secret generic nats-test2-creds --from-file "$NSC_DIR/nkeys/creds/KO/B/test.creds"
+        kctl create -n nats secret generic stan-creds       --from-file "$NSC_DIR/nkeys/creds/KO/STAN/stan.creds"
+        kctl create -n nats configmap nats-accounts         --from-file "$NSC_DIR/config/resolver.conf"
 }
 
 install_prometheus() {
         # Install Prometheus Operator
-        kubectl apply --validate=false --filename $PROMETHEUS_OPERATOR_YML
+        kubectl apply -n nats --validate=false --filename $PROMETHEUS_OPERATOR_YML
 
         # Create Prometheus instance for NATS usage
-        kctl apply --filename $NATS_PROMETHEUS_YML
+        kctl apply -n nats --filename $NATS_PROMETHEUS_YML
 }
 
 install_nats_surveyor_components() {
         install_prometheus
 
         # Deploy NATS Surveyor Grafana instance
-        kctl apply --filename $NATS_GRAFANA_YML
+        kctl apply -n nats --filename $NATS_GRAFANA_YML
 }
 
 install_nats_surveyor_with_tls() {
-        kctl apply --filename $NATS_SURVEYOR_TLS_YML
+        kctl apply -n nats --filename $NATS_SURVEYOR_TLS_YML
 }
 
 install_nats_surveyor() {
-        kctl apply --filename $NATS_SURVEYOR_YML
+        kctl apply -n nats --filename $NATS_SURVEYOR_YML
 }
 
 install_nats_server_with_auth() {
-        kctl apply --filename $NATS_SERVER_YML
+        kctl apply -n nats --filename $NATS_SERVER_YML
 }
 
 install_nats_server_with_auth_and_tls() {
-        kctl apply --filename $CERT_MANAGER_YML
-        kctl apply --filename $NATS_SERVER_TLS_YML
+        kctl apply -n nats --filename $CERT_MANAGER_YML
+        kctl apply -n nats --filename $NATS_SERVER_TLS_YML
 }
 
 install_insecure_nats_server() {
-        kctl apply --filename $NATS_SERVER_INSECURE_YML
+        kctl apply -n nats --filename $NATS_SERVER_INSECURE_YML
 }
 
 install_cert_manager() {
-        kubectl get ns cert-manager > /dev/null 2> /dev/null || {
-                kubectl create namespace cert-manager
+        kubectl get -n nats ns cert-manager > /dev/null 2> /dev/null || {
+                kubectl create -n nats namespace cert-manager
         }
 
-        kubectl apply --validate=false -f $CERT_MANAGER_RELEASE_YML
+        kubectl apply -n nats --validate=false -f $CERT_MANAGER_RELEASE_YML
 }
 
 install_nats_box_with_auth_and_tls() {
-        kctl apply -f $NATS_BOX_AUTH_TLS_YML
+        kctl apply -n nats -f $NATS_BOX_AUTH_TLS_YML
 }
 
 install_nats_box_with_auth() {
-        kctl apply -f $NATS_BOX_AUTH_YML
+        kctl apply -n nats -f $NATS_BOX_AUTH_YML
 }
 
 install_nats_box() {
-        kctl apply -f $NATS_BOX_YML
+        kctl apply -n nats -f $NATS_BOX_YML
 }
 
 install_nats_streaming_with_auth_and_tls() {
-        kctl apply -f $NATS_STREAMING_AUTH_TLS_YML
+        kctl apply -n nats -f $NATS_STREAMING_AUTH_TLS_YML
 }
 
 install_nats_streaming_with_auth() {
-        kctl apply -f $NATS_STREAMING_AUTH_YML
+        kctl apply -n nats -f $NATS_STREAMING_AUTH_YML
 }
 
 show_usage() {
@@ -262,9 +262,6 @@ main() {
         echo
         echo -e "${NC}"
 
-        kubectl config set-context --current --namespace=nats
-
-
         if [ $with_auth = true ]; then
                 # Skip  if directory already exists
                 [ ! -d "$NSC_DIR" ] && create_creds
@@ -302,8 +299,8 @@ main() {
                         install_nats_surveyor
                 fi
         fi
-        kctl wait --for=condition=Ready pod/nats-0   --timeout=60s
-        kctl wait --for=condition=Ready pod/nats-box --timeout=60s
+        kctl wait -n nats --for=condition=Ready pod/nats-0   --timeout=60s
+        kctl wait -n nats --for=condition=Ready pod/nats-box --timeout=60s
 
         echo -e "${CYAN}"
         echo " +------------------------------------------+"
@@ -317,7 +314,7 @@ main() {
         echo "You can now start receiving and sending messages using "
         echo "the nats-box instance deployed into your namespace:"
         echo
-        echo -e "  ${CYAN}kubectl exec -it nats-box -- /bin/sh -l ${NC}"
+        echo -e "  ${CYAN}kubectl exec -n nats -it nats-box -- /bin/sh -l ${NC}"
         echo
         if [ $with_auth = true ]; then
                 echo "Using the test account user:"
@@ -362,7 +359,7 @@ main() {
         if [ $with_surveyor = true ]; then
                 echo "You can also connect to your monitoring dashboard:"
                 echo -e " ${CYAN}"
-                echo "  kubectl port-forward deployments/nats-surveyor-grafana 3000:3000"
+                echo "  kubectl port -n nats-forward deployments/nats-surveyor-grafana 3000:3000"
                 echo -e " ${NC}"
                 echo "Then open the following in your browser:"
                 echo -e " ${CYAN}"
