@@ -19,7 +19,7 @@ spec:
     kind: ClusterIssuer
   commonName: nats-ca
   organization:
-  - Your organization
+    - Your organization
   isCA: true
 ---
 apiVersion: cert-manager.io/v1alpha2
@@ -42,16 +42,16 @@ spec:
     name: nats-ca
     kind: Issuer
   organization:
-  - NATS.io
-  commonName: nats.default.svc.cluster.local
+    - NATS.io
+  commonName: nats.nats.svc.cluster.local
   dnsNames:
-  - nats
-  - nats.default
-  - nats.default.svc
-  - nats.default.svc.cluster.local
-  - '*.nats'
-  - '*.nats.default'
-  - '*.nats.default.svc'
+    - nats
+    - nats.nats
+    - nats.nats.svc
+    - nats.nats.svc.cluster.local
+    - "*.nats"
+    - "*.nats.nats"
+    - "*.nats.nats.svc"
 ---
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
@@ -65,5 +65,5 @@ spec:
     name: nats-ca
     kind: Issuer
   organization:
-  - NATS.io
+    - NATS.io
   commonName: sample-nats-client
