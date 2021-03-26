@@ -1,7 +1,7 @@
 <img width="2487" alt="Screen Shot 2020-10-12 at 4 59 32 PM" src="https://user-images.githubusercontent.com/26195/95800603-99d95f00-0cac-11eb-968b-f3e4dde3ff8d.png">
 
 [![License][License-Image]][License-Url]
-[![Version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=go&type=5&v=0.7.4)](https://github.com/nats-io/k8s/releases/tag/v0.7.4)
+[![Version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=go&type=5&v=0.7.4)](https://github.com/vitta-health/nats-io-k8s/releases/tag/v0.7.4)
 
 [License-Url]: https://www.apache.org/licenses/LICENSE-2.0
 [License-Image]: https://img.shields.io/badge/License-Apache2-blue.svg
@@ -11,20 +11,22 @@
 In this repository you can find several examples of how to deploy NATS, NATS Streaming 
 and other tools from the NATS ecosystem on Kubernetes.
 
-- [Getting started](#getting-started-via-the-one-line-installer)
-- [Helm Charts for NATS](#helm-charts-for-nats)
+- [Running NATS on K8S](#running-nats-on-k8s)
+  - [Getting started with NATS using Helm](#getting-started-with-nats-using-helm)
+  - [Quick start using the one-line installer](#quick-start-using-the-one-line-installer)
+  - [License](#license)
 
 ## Getting started with NATS using Helm
 
-In this repo you can find the Helm 3 based [charts](https://github.com/nats-io/k8s/tree/master/helm/charts) to install NATS and NATS Streaming (STAN).
+In this repo you can find the Helm 3 based [charts](https://github.com/vitta-health/nats-io-k8s/tree/master/helm/charts) to install NATS and NATS Streaming (STAN).
 
 ```sh
-> helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+> helm repo add nats https://vitta-health.github.io/nats-io-k8s/helm/charts/
 > helm repo update
 
 > helm repo list
 NAME          	URL 
-nats          	https://nats-io.github.io/k8s/helm/charts/
+nats          	https://vitta-health.github.io/nats-io-k8s/helm/charts/
 
 > helm install my-nats nats/nats
 > helm install my-stan nats/stan --set stan.nats.url=nats://my-nats:4222
@@ -35,12 +37,12 @@ nats          	https://nats-io.github.io/k8s/helm/charts/
 Another method way to quickly bootstrap a NATS is to use the following command:
 
 ```sh
-curl -sSL https://nats-io.github.io/k8s/setup.sh | sh
+curl -sSL https://vitta-health.github.io/nats-io-k8s/setup.sh | sh
 ```
 
 *In case you don't have a Kubernetes cluster already, you can find some notes on how to create a small cluster using one of the hosted Kubernetes providers [here](docs/create-k8s-cluster.md). You can find more info about running NATS on Kubernetes in the [docs](https://docs.nats.io/nats-on-kubernetes/minimal-setup).*
 
-This will run a `nats-setup` container with the [required policy](https://github.com/nats-io/k8s/blob/master/setup/bootstrap-policy.yml)
+This will run a `nats-setup` container with the [required policy](https://github.com/vitta-health/nats-io-k8s/blob/master/setup/bootstrap-policy.yml)
 and deploy a NATS cluster on Kubernetes with external access, TLS and
 decentralized authorization.
 
@@ -55,10 +57,10 @@ to have a simpler setup as follows:
 
 ```sh
 # Disable TLS
-curl -sSL https://nats-io.github.io/k8s/setup.sh | sh -s -- --without-tls
+curl -sSL https://vitta-health.github.io/nats-io-k8s/setup.sh | sh -s -- --without-tls
 
 # Disable Auth and TLS (also disables NATS surveyor and NATS Streaming)
-curl -sSL https://nats-io.github.io/k8s/setup.sh | sh -s -- --without-tls --without-auth
+curl -sSL https://vitta-health.github.io/nats-io-k8s/setup.sh | sh -s -- --without-tls --without-auth
 ```
 
 **Note**: Since [NATS Streaming](https://github.com/nats-io/nats-streaming-server)
@@ -80,7 +82,7 @@ Next, open the following URL in your browser:
 To cleanup the results you can run:
 
 ```sh
-curl -sSL https://nats-io.github.io/k8s/destroy.sh | sh
+curl -sSL https://vitta-health.github.io/nats-io-k8s/destroy.sh | sh
 ```
 
 ## License

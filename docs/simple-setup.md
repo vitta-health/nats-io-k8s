@@ -6,9 +6,9 @@ To try NATS with the minimal components, you can start with the following:
 
 ```sh
 # Single server NATS
-kubectl apply -f https://raw.githubusercontent.com/nats-io/k8s/master/nats-server/single-server-nats.yml
+kubectl apply -f https://raw.githubusercontent.com/vitta-health/nats-io-k8s/master/nats-server/single-server-nats.yml
 
-kubectl apply -f https://raw.githubusercontent.com/nats-io/k8s/master/nats-streaming-server/single-server-stan.yml
+kubectl apply -f https://raw.githubusercontent.com/vitta-health/nats-io-k8s/master/nats-streaming-server/single-server-stan.yml
 ```
 
 This will setup for you:
@@ -57,10 +57,10 @@ cluster that has an attached volume for persistence.
 
 ```sh
 # Create NATS cluster
-kubectl apply -f https://raw.githubusercontent.com/nats-io/k8s/master/nats-server/simple-nats.yml
+kubectl apply -f https://raw.githubusercontent.com/vitta-health/nats-io-k8s/master/nats-server/simple-nats.yml
 
 # Create STAN cluster
-kubectl apply -f https://raw.githubusercontent.com/nats-io/k8s/master/nats-streaming-server/simple-stan.yml
+kubectl apply -f https://raw.githubusercontent.com/vitta-health/nats-io-k8s/master/nats-streaming-server/simple-stan.yml
 ```
 
 For NATS Streaming, it is actually recommended to use the Fault

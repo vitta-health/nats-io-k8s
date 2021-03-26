@@ -12,7 +12,7 @@ you should override the defaults via the environment variables defined
 in the `.env` file at the root of the repository:
 
 ```
-git clone https://github.com/nats-io/k8s/
+git clone https://github.com/vitta-health/nats-io-k8s/
 source .env
 ./setup/nats-setup.sh -h
 
@@ -28,7 +28,7 @@ Usage: ./setup/nats-setup.sh [options]
 ### Building nats-setup container image
 
 ```sh
-git clone https://github.com/nats-io/k8s/
+git clone https://github.com/vitta-health/nats-io-k8s/
 cd setup
 docker build -t synadia/nats-setup:latest .
 ```

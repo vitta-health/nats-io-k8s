@@ -7,7 +7,7 @@ NATS 2.0 introduced the concept of accounts to provide secure multi-tenancy thro
 ## TL;DR;
 
 ```console
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+helm repo add nats https://vitta-health.github.io/nats-io-k8s/helm/charts/
 helm install my-nats-account-server nats/nats-account-server
 ```
 

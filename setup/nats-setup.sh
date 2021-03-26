@@ -6,7 +6,7 @@ VERSION="0.2.2"
 
 NATS_K8S_COMMIT=93c2a213bd26791fda29da2b7238e3f3b1ca36e1
 
-NATS_K8S_VERSION=https://raw.githubusercontent.com/nats-io/k8s/$NATS_K8S_COMMIT
+NATS_K8S_VERSION=https://raw.githubusercontent.com/vitta-health/nats-io-k8s/$NATS_K8S_COMMIT
 
 NATS_SERVER_YML=${DEFAULT_NATS_SERVER_YML:=$NATS_K8S_VERSION/nats-server/nats-server-with-auth.yml}
 
@@ -180,9 +180,9 @@ show_version() {
 
 main() {
         with_surveyor=true
-        with_tls=true
+        with_tls=false
         with_auth=true
-        with_cert_manager=true
+        with_cert_manager=false
         with_stan=true
 
         while [ ! $# -eq 0 ]; do
@@ -261,6 +261,9 @@ main() {
         echo " +-------------------------------------------+"
         echo
         echo -e "${NC}"
+
+        kubectl config set-context --current --namespace=nats
+
 
         if [ $with_auth = true ]; then
                 # Skip  if directory already exists

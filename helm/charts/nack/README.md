@@ -3,7 +3,7 @@
 ## TL;DR;
 
 ```console
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+helm repo add nats https://vitta-health.github.io/nats-io-k8s/helm/charts/
 helm install nats nats/nats
 helm install nack-jsc nats/nack --set jetstream.nats.url=nats://nats:4222
 ```
@@ -94,7 +94,7 @@ data into `mystream`.
 
 ```sh
 # Run nats-box that includes the NATS management utilities.
-$ kubectl apply -f https://nats-io.github.io/k8s/tools/nats-box.yml
+$ kubectl apply -f https://vitta-health.github.io/nats-io-k8s/tools/nats-box.yml
 $ kubectl exec -it nats-box -- /bin/sh -l
 
 # Publish a couple of messages
