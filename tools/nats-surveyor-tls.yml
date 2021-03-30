@@ -53,7 +53,7 @@ spec:
           secretName: nats-server-tls
       - name: creds-volume
         secret:
-          secretName: nats-test-creds
+          secretName: nats-user-creds
       - name: config-volume
         configMap:
           name: nats-surveyor-observations

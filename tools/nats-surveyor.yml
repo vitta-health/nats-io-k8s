@@ -11,10 +11,10 @@ spec:
     prometheus: nats-surveyor
   clusterIP: None
   ports:
-  - name: web
-    port: 9090
-    protocol: TCP
-    targetPort: web
+    - name: web
+      port: 9090
+      protocol: TCP
+      targetPort: web
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -45,40 +45,40 @@ spec:
         app: nats-surveyor
     spec:
       volumes:
-      - name: syscreds-volume
-        secret:
-          secretName: nats-sys-creds
-      - name: creds-volume
-        secret:
-          secretName: nats-test-creds
-      - name: config-volume
-        configMap:
-          name: nats-surveyor-observations
+        - name: syscreds-volume
+          secret:
+            secretName: nats-sys-creds
+        - name: creds-volume
+          secret:
+            secretName: nats-user-creds
+        - name: config-volume
+          configMap:
+            name: nats-surveyor-observations
       containers:
-      - name: nats-surveyor
-        image: synadia/nats-surveyor:0.0.1-alpha4
-        ports:
-        - containerPort: 7777
-          name: metrics
-        command:
-         - "/nats-surveyor"
-         - "-s=nats://nats:4222"
-         - "-c=3"
-         - "-creds=/var/run/nats/creds/sys/sys.creds"
-         - "-observe=/etc/nats/observations/"
-        volumeMounts:
-          - name: syscreds-volume
-            mountPath: /var/run/nats/creds/sys
-          - name: creds-volume
-            mountPath: /var/run/nats/creds/user
-          - name: config-volume
-            mountPath: /etc/nats/observations
+        - name: nats-surveyor
+          image: synadia/nats-surveyor:0.0.1-alpha4
+          ports:
+            - containerPort: 7777
+              name: metrics
+          command:
+            - "/nats-surveyor"
+            - "-s=nats://nats:4222"
+            - "-c=3"
+            - "-creds=/var/run/nats/creds/sys/sys.creds"
+            - "-observe=/etc/nats/observations/"
+          volumeMounts:
+            - name: syscreds-volume
+              mountPath: /var/run/nats/creds/sys
+            - name: creds-volume
+              mountPath: /var/run/nats/creds/user
+            - name: config-volume
+              mountPath: /etc/nats/observations
 
-        # Disable all cpu limits for the server.
-        #
-        resources:
-          requests:
-            cpu: 0
+          # Disable all cpu limits for the server.
+          #
+          resources:
+            requests:
+              cpu: 0
 ---
 # Service used by Prometheus Operator to find the metrics endpoint.
 apiVersion: v1
@@ -90,10 +90,10 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: metrics
-    port: 7777
-    protocol: TCP
-    targetPort: 7777
+    - name: metrics
+      port: 7777
+      protocol: TCP
+      targetPort: 7777
   selector:
     app: nats-surveyor
 ---
@@ -123,4 +123,4 @@ spec:
     matchLabels:
       app: nats-surveyor
   endpoints:
-  - port: metrics
+    - port: metrics
