@@ -25,7 +25,7 @@ data:
     {
       "name": "latency.on.test",
       "topic": "latency.on.test",
-      "credential": "/var/run/nats/creds/test/test.creds"
+      "credential": "/var/run/nats/creds/user/user.creds"
     }
 ---
 apiVersion: apps/v1
@@ -76,7 +76,7 @@ spec:
           - name: syscreds-volume
             mountPath: /var/run/nats/creds/sys
           - name: creds-volume
-            mountPath: /var/run/nats/creds/test
+            mountPath: /var/run/nats/creds/user
           - name: config-volume
             mountPath: /etc/nats/observations
 

@@ -28,7 +28,7 @@ spec:
         - name: STAN_CREDS
           value: /var/run/nats/creds/stan/stan.creds
         - name: USER_CREDS
-          value: /var/run/nats/creds/test/user.creds
+          value: /var/run/nats/creds/user/user.creds
       command:
         - "tail"
         - "-f"
