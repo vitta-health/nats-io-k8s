@@ -84,6 +84,7 @@ create_creds() {
           mkdir -p "$NATS_CONFIG_HOME"
           cd "$NATS_CONFIG_HOME"
           nsc generate config --mem-resolver --sys-account SYS > resolver.conf
+          sed -i '1d' resolver.conf
         )
 
         if [ $SKIP_NSC_DIR_CHOWN != "true" ]; then
@@ -93,8 +94,7 @@ create_creds() {
 
 create_secrets() {
         kctl create -n nats secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds"
-        kctl create -n nats secret generic nats-test-creds  --from-file "$NSC_DIR/nkeys/creds/KO/A/test.creds"
-        kctl create -n nats secret generic nats-test2-creds --from-file "$NSC_DIR/nkeys/creds/KO/B/test.creds"
+        kctl create -n nats secret generic nats-user-creds  --from-file "$NSC_DIR/nkeys/creds/KO/USER/user.creds"
         kctl create -n nats secret generic stan-creds       --from-file "$NSC_DIR/nkeys/creds/KO/STAN/stan.creds"
         kctl create -n nats configmap nats-accounts         --from-file "$NSC_DIR/config/resolver.conf"
 }

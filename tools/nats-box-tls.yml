@@ -12,10 +12,7 @@ spec:
       secretName: nats-sys-creds
   - name: creds-volume
     secret:
-      secretName: nats-test-creds
-  - name: creds2-volume
-    secret:
-      secretName: nats-test2-creds
+      secretName: nats-user-creds
   - name: stan-creds-volume
     secret:
       secretName: stan-creds
@@ -35,9 +32,7 @@ spec:
     - name: STAN_CREDS
       value: /var/run/nats/creds/stan/stan.creds
     - name: USER_CREDS
-      value: /var/run/nats/creds/test/test.creds
-    - name: USER2_CREDS
-      value: /var/run/nats/creds/test2/test.creds
+      value: /var/run/nats/creds/test/user.creds
     lifecycle:
       postStart:
         exec:
@@ -53,9 +48,7 @@ spec:
       - name: syscreds-volume
         mountPath: /var/run/nats/creds/sys
       - name: creds-volume
-        mountPath: /var/run/nats/creds/test
-      - name: creds2-volume
-        mountPath: /var/run/nats/creds/test2
+        mountPath: /var/run/nats/creds/user
       - name: stan-creds-volume
         mountPath: /var/run/nats/creds/stan
       - name: nats-client-tls-volume
